@@ -22,3 +22,7 @@ body {
 .navbar {
     height: 40px;
 }
+
+.form-panel {
+    height: auto;
+}
