@@ -9,9 +9,7 @@ app.use(bodyParser.json());
 
 
 // default route
-app.get('/', function(req,res){
-    res.send('Welcome to Grab');
-})
+app.use('/', express.static('www'));
 
 
 app.listen(PORT, function(){
