@@ -6,6 +6,19 @@ html {
     height: 100%;
 }
 
-.body {
+body {
     height: 100%;
+}
+
+.ng-scope {
+    height: 100%;
+    min-heig: 100%;
+}
+
+.app-container {
+    height: 100%;
+}
+
+.navbar {
+    height: 40px;
 }
