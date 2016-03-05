@@ -1,5 +1,6 @@
 app.controller('MainController', ['$scope', 'leafletData', 'distance', function($scope, leafletData, distance) {
     var pricePerKm = 0.8;
+    var routeControl;
 
     angular.extend($scope, {
         center: {
@@ -38,15 +39,38 @@ app.controller('MainController', ['$scope', 'leafletData', 'distance', function(
     $scope.distance = distance.get($scope.markers.pickup, $scope.markers.dropoff);
     $scope.price = 2 + ($scope.distance * pricePerKm);
 
-    $scope.$on('leafletDirectiveMarker.dragend', function(event, args){
+    leafletData.getMap('mymap').then(function(map) {
+        routeControl = L.Routing.control({
+            waypoints: [
+                $scope.markers.pickup,
+                $scope.markers.dropoff
+            ],
+            routeWhileDragging: false,
+            show: false,
+            createMarker: function() { return null; }
+        }).addTo(map);
+    })
+
+    $scope.$on('leafletDirectiveMarker.mymap.dragend', function(event, args){
         if(args.model.id === 'pu'){
             $scope.markers.pickup = args.model;
         }else if(args.model.id === 'do'){
             $scope.markers.dropoff = args.model;
         }
+
+        console.log(L.Routing);
+        console.log(L.Routing.Control);
+        console.log(L.Routing.control);
+        console.log(L.Routing.Control.setWaypoints);
+
+        routeControl.getPlan().setWaypoints([
+            $scope.markers.pickup,
+            $scope.markers.dropoff
+        ])
         console.log($scope.markers)
 
         $scope.distance = distance.get($scope.markers.pickup, $scope.markers.dropoff);
         $scope.price = 2 + ($scope.distance * pricePerKm);
     })
+
 }])
