@@ -36,6 +36,7 @@ app.controller('MainController', ['$scope', 'leafletData', 'distance', function(
             }
         }
     });
+    //routeControl.totalDistance;
     $scope.distance = distance.get($scope.markers.pickup, $scope.markers.dropoff);
     $scope.price = 2 + ($scope.distance * pricePerKm);
 
